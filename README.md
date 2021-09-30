@@ -1,5 +1,5 @@
 # Hollywood Back Garden
-![./android/res/HBG_log.png]
+![HBG](./android/res/HBG_log.png)
 好莱坞后花园
 
 ## 打造家庭影院
