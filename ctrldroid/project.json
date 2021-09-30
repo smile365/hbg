@@ -1,0 +1,24 @@
+{
+    "name": "Control Android phone",
+    "main": "bmobapi.js",
+    "ignore": [
+        "build",
+        ".env"
+    ],
+    "packageName": "com.sxy91.ctrldroid",
+    "versionName": "0.1.1",
+    "versionCode": 1,
+    "encryptLevel": 1,
+    "icon": "res/icon.png",
+    "launchConfig": {
+        "displaySplash": true,
+        "hideLogs": false,
+        "splashIcon": "res/splashIcon.png",
+        "splashText": "远程控制Android手机",
+        "stableMode": false
+    },
+    "optimization": {
+        "removeOpenCv": true,
+        "unusedResources": true
+    }
+}
