@@ -1,6 +1,8 @@
 # Hollywood Back Garden
-![HBG](./android/res/HBG_log.png)
-好莱坞后花园
+
+好莱坞后花园  
+
+![HBG](./ctrldroid/res/HBG_logo.png)
 
 ## 打造家庭影院
 1. 随时随地都可通过手机或电脑把喜欢的电影、电视剧添加到下载队列。
