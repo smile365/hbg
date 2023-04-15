@@ -19,28 +19,42 @@ from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 import dHash as dh
 
+# import sh
+
+IMG_PATH = "../www/imgs"
+
 def loop():
-	os.system(f'rm -rf imgs/*png')
+	print(os.system('adb devices'))
+	os.system(f'mkdir -p {IMG_PATH}')
+	os.system(f'rm -rf {IMG_PATH}/*png')
 	imgName = "screen"
 	while True:
 		# name = f'{tm}.png'
-		os.system(f'adb shell screencap -p > imgs/{imgName}.png')
+		os.system(f'adb shell screencap -p > {IMG_PATH}/{imgName}.png')
+		time.sleep(1)
 		if len(imgs) < 1:
 			imgs.append(imgName)
 			imgName = int(time.time())
 			continue
 		oldImgName = imgs[-1]
-		newImg = Image.open(f'imgs/{imgName}.png')
-		oldImg = Image.open(f'imgs/{oldImgName}.png')
+
+		newPath = f'{IMG_PATH}/{imgName}.png'
+		oldPath = f'{IMG_PATH}/{oldImgName}.png'
+		if not os.path.exists(newPath) or not os.path.exists(oldPath):
+			print("file not exists")
+			sleep(5)
+			continue
+		newImg = Image.open(newPath)
+		oldImg = Image.open(oldPath)
 		grade = dh.caldHashSimilarity(newImg, oldImg)
-		print(imgName,oldImgName,grade)
+		# print(imgName,oldImgName,grade)
 		if grade < 64:
 			# 不相似
 			imgs.append(imgName)
-			os.system(f'rm -rf imgs/{oldImgName}.png')
+			os.system(f'rm -rf {IMG_PATH}/{oldImgName}.png')
 		else:
 			# 相似
-			os.system(f'rm -rf imgs/{imgName}.png')
+			os.system(f'rm -rf {IMG_PATH}/{imgName}.png')
 		imgName = int(time.time())
 
 
@@ -49,26 +63,26 @@ t.start()
 
 
 
-@get("/api/img")
+@get("/hbg/api/img")
 def getImg():
 	if len(imgs) > 0:
 		return str(imgs[-1])
 	return "screen"
 	
 
-@get("/api/click")
+@get("/hbg/api/click")
 def click():
 	x = request.query.x
 	y = request.query.y
-	print(x,y)
+	print("click",x,y)
 	os.system(f'adb shell input tap {x} {y}')
 	return "ok"
 
-@get("/api/move")
+@get("/hbg/api/move")
 def click():
 	points = request.query.points
 	#args = points.split(",")
-	print(points)
+	print("adb shell input swipe ",points)
 	os.system(f'adb shell input swipe {points}')
 	return "ok"
 
